@@ -1,0 +1,30 @@
+#menu-posts-event img{
+	width:25px;
+	 margin-top: -4px;
+	height:25px;
+}
+
+.gmap3{
+        margin: 20px auto;
+        border: 1px dashed #C0C0C0;
+        width: 100%;
+        height: 250px;
+      }
+
+
+.loader:after {
+    color: #FF0000;
+    content: "ВНИМАНИЕ РАБОТАЕТ СКРИПТ, НЕ ПУГАЙТЕСЬ, ПРОЦЕСС МОЖЕТ ЗАНЯТЬ, НЕКОТОРОЕ ВРЕМЯ!!!";
+    display: inline-block;
+    font-size: 55px;
+    line-height: 2;
+    margin-top: 10%;
+    text-align: center;
+}
+.loader {
+    background: url("../img/294.gif") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    display: none;
+}
