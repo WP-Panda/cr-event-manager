@@ -1,4 +1,10 @@
 <?php
+
+function register_session(){
+    if( !session_id() )
+        session_start();
+}
+add_action('init','register_session');
 /*----------------------------------------------------------------------------*/
 /*  Активация шорткодов в тексовом виджете
 /*----------------------------------------------------------------------------*/
@@ -22,7 +28,8 @@ function get_meta_values($key = '', $types = '', $tax = '', $type = 'location', 
         ORDER BY meta_value ASC
     ", $key, $status, $type));
     
-    $results = array_unique($r);
+    foreach ($r as $re) $trim[] = trim($re);
+    $results = array_unique($trim);
     $out     = '';
     $ww      = 0;
     foreach ($results as $result) {
@@ -154,10 +161,13 @@ function this_region(){
 if (!function_exists('cr_todays_events')) {
     function cr_todays_events()
     {
-        
-        $ip_array  = get_conwert_ip_too_region();
-        $region_id = $ip_array['region_id'];
-        
+        if( $_COOKIE['regions'] ) {
+            $region_id = $_COOKIE['regions'];
+        } else {
+            $ip_array  = get_conwert_ip_too_region();
+            $region_id = $ip_array['region_id'];
+        }
+
         global $post;
         $day_start = mktime(0, 0, 0);
         $day_end   = mktime(0, 0, 0, date('n'), date('j') + 1);
@@ -184,12 +194,12 @@ if (!function_exists('cr_todays_events')) {
             )
         );
         
-        if (!empty($ip_array['region_id'])) {
+        //if (!empty($ip_array['region_id'])) {
             $args['meta_query'][2] = array(
                 'key' => 'event_region',
                 'value' => $region_id
             );
-        }
+       // }
         
         $thisevent = new WP_Query($args);
         if ($thisevent->have_posts()): 
@@ -224,8 +234,12 @@ if (!function_exists('cr_todays_events_tabs')) {
     function cr_todays_events_tabs($pager = null)
     {
         
-        $ip_array  = get_conwert_ip_too_region();
-        $region_id = $ip_array['region_id'];
+        if( $_COOKIE['regions'] ) {
+            $region_id = $_COOKIE['regions'];
+        } else {
+            $ip_array  = get_conwert_ip_too_region();
+            $region_id = $ip_array['region_id'];
+        }
         
         global $post;
         $day_start = mktime(0, 0, 0);
@@ -257,12 +271,12 @@ if (!function_exists('cr_todays_events_tabs')) {
             )
         );
         
-        if (!empty($ip_array['region_id'])) {
+        //if (!empty($ip_array['region_id'])) {
             $args['meta_query'][2] = array(
                 'key' => 'event_region',
                 'value' => $region_id
             );
-        }
+        //}
         
         global $post;
         $thisevent = new WP_Query($args);
@@ -523,7 +537,7 @@ function cr_event_tabs_action_callback()
     $out .= '</div>';
     
     echo $out;
-    print_r($args);
+    //print_r($args);
     wp_reset_query();
     die();
 }
@@ -652,7 +666,7 @@ function cr_event_filter_action_callback()
             $day_end = data_convert_unix($out['to-event-in']);
         
         if (!empty($day_start)) {
-            echo '<h1>' . $day_start . '</h1>';
+           // echo '<h1>' . $day_start . '</h1>';
             $args['meta_query']['start'] = array(
                 'key' => 'unix_date_end',
                 'value' => $day_start,
@@ -662,7 +676,7 @@ function cr_event_filter_action_callback()
         }
         
         if (!empty($day_end) && $date !== 'past') {
-            echo '<h1>' . $day_end . '</h1>';
+           // echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_start',
                 'value' => $day_end,
@@ -670,7 +684,7 @@ function cr_event_filter_action_callback()
                 'compare' => '<='
             );
         } elseif (!empty($day_end) && $date === 'past') {
-            echo '<h1>' . $day_end . '</h1>';
+           // echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_end',
                 'value' => $day_end,
@@ -764,6 +778,7 @@ function cr_event_filter_action_callback()
     $out .= '</div>';
     
     echo $out;
+   // print_r($args);
     wp_reset_query();
     die();
 }
@@ -823,7 +838,7 @@ function cr_event_ide_filter_action_callback()
         }
         
         if (!empty($day_end) && $data_filters !== 'filter-past') {
-            echo '<h1>' . $day_end . '</h1>';
+           // echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_start',
                 'value' => $day_end,
@@ -831,7 +846,7 @@ function cr_event_ide_filter_action_callback()
                 'compare' => '<='
             );
         } elseif (!empty($day_end) && $data_filters === 'filter-past') {
-            echo '<h1>' . $day_end . '</h1>';
+          //  echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_end',
                 'value' => $day_end,
@@ -1131,4 +1146,52 @@ function cr_event_ical_fooll($args = null, $url = null)
     } else {
         file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/wp-content/evens/tmp_filtred/' . $url . '.ics', $out);
     }
-} ?>
+} 
+
+function cr_event_checkbox_action_callback()
+{
+    check_ajax_referer('cr-event-tabs-special-string', 'security');
+    if (!empty($_POST['data_ids'])){
+            $data_ids = $_POST['data_ids'];
+        $n=0;
+        $returns = "";
+        foreach ($data_ids as $key) {
+            if( $n == 0 ) {
+                $returns .=  "AND pm.meta_value = '" . $key ."'" ;
+            } else {
+                $returns .="OR pm.meta_value = '" . $key . "'";
+            }
+        $n++;
+        }
+    }
+
+
+    global $wpdb;
+    $r = $wpdb->get_col("
+        SELECT pm.post_id
+        FROM jd_postmeta pm
+        LEFT JOIN jd_posts p ON p.ID = pm.post_id
+        WHERE pm.meta_key = 'location_region'
+        AND p.post_status = 'publish'
+        AND p.post_type = 'location'
+        " . $returns . "
+        ORDER BY meta_value ASC
+    ");
+
+    foreach ($r as $key) {
+        $arrayw[] = trim( get_post_meta( $key, 'location_town', true ) );
+    }
+
+    $results = array_unique($arrayw);
+    $results = array_filter($results); 
+    $out ="";
+    foreach ($results as $result) {
+         $out .= "<li><input type='checkbox' name='location_town[]'  value= '" . $result . "'><a href='". home_url() . "/selected?".$result."=".$result."' title='" . $result . "'>" . $result . "</a></li>";
+    }
+    echo $out;
+    die();
+}
+add_action('wp_ajax_cr_event_checkbox_action', 'cr_event_checkbox_action_callback');
+add_action('wp_ajax_nopriv_cr_event_checkbox_action', 'cr_event_checkbox_action_callback');
+
+?>

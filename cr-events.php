@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: CR_Evemts
+ * Plugin Name: CR_Events
  * Plugin URI: 
  * Description: Менеджер мероприятий
  * Version: 0.5.0
@@ -38,11 +38,7 @@ require_once 'inc/BFI_Thumb.php';
 require_once 'inc/functions.php';
 require_once 'inc/anonses_filter.php';
 require_once 'inc/icalclass.php';
-//require_once 'Google/Client.php';
-//21require_once 'google-api-php-client/src/Google_Client.php';
-//require_once 'google-api-php-client/src/contrib/Google_CalendarService.php';
-//require_once 'google-api-php-client/src/contrib/Google_CalendarService.php';
-
+require_once 'inc/modal-window-first.php';
 /**
  * Enqueueing scripts and styles in the admin
  * @param  int $hook Current page hook
@@ -68,7 +64,9 @@ function cr_frontend_style() {
 	wp_register_script( 'google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false', array(), '1.0.0', true);
 	wp_register_script( 'gmap3', SCRIPTS . 'gmap3.min.js', array( 'jquery' , 'google-maps' ), '6.0',	true );
 	wp_register_script('cr-event-ajax', SCRIPTS . 'ajax.js', array(), '1.0.0', true);
+	//wp_enqueue_script('cr-event-modal', ROOT . '/modal/jquery.arcticmodal-0.3.min.js', array(), '1.0.0', true);
 	wp_enqueue_style( 'cr-events-frontend-style', STYLES . 'cr-events-frontend-style.css', false, '1.0.0', 'all' );
+	//wp_enqueue_style( 'cr-events-modal', ROOT . '/modal/jquery.arcticmodal-0.3.css', false, '1.0.0', 'all' );
 	wp_enqueue_script('cr-event-ajax');
 		wp_localize_script('cr-event-ajax','EventAjax', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),

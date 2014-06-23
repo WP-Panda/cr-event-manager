@@ -572,5 +572,30 @@
         $('.table-close') .click(function () {
             $('#advanced-filter-form') .slideUp();
         });
+
+        function checkedData(){
+            var selectedItems = new Array();
+            $('input[name="location_region[]"]:checked').each(function(){
+                selectedItems.push($(this).val());
+                
+            });
+            return selectedItems;
+        }
+
+        /* обработка регион-город */
+        $(document).on('change', '[name="location_region[]"]',function() {
+
+            var data = {
+                action: 'cr_event_checkbox_action',
+                security: EventAjax.security,
+                data_ids:checkedData(),
+            };
+
+             $.post(EventAjax.ajaxurl, data, function (response) {
+                $('ul.filtred-town-respons') .html(response);
+            });
+
+        });
+
     });
 }) (jQuery)

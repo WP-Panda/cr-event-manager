@@ -54,7 +54,7 @@ $ip_array = get_conwert_ip_too_region();
 				</tr>
 				<tr>
 					<td class='lebel'><h3><?php _e('Город','wp_panda'); ?></h3></td>
-					<td><ul><?php echo get_meta_values('location_town','checkbox') ?></ul></td>
+					<td><ul class="filtred-town-respons"><?php echo get_meta_values('location_town','checkbox') ?></ul></td>
 				</tr>
 				<tr>
 					<td class='lebel'><h3><?php _e('Дата анонса','wp_panda'); ?></h3></td>
