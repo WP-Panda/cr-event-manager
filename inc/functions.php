@@ -935,6 +935,7 @@ function cr_event_ide_filter_action_callback()
     $out .= '</div>';
     
     echo $out;
+    print_r($args);
     wp_reset_query();
     die();
 }

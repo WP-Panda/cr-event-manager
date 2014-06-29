@@ -457,3 +457,74 @@ function my_action_callback() {
   die(); // this is required to return a proper result
 }
 add_action( 'wp_ajax_my_action', 'my_action_callback' );
+
+/* добавление поста */
+
+
+
+function cr_add_event_action_callback() {
+  //global $wpdb; // this is how you get access to the database
+ 
+  check_ajax_referer( 'cr-special-string', 'security' );
+  //$post_id= intval( $_POST['id'] );
+  	$location_name = $_POST['location_name'] ? $_POST['location_name'] : '';
+    $location_desk = $_POST['location_desk'] ? $_POST['location_desk'] : '';
+     
+    $post = array(
+	  'comment_status' => 'closed',
+	  'ping_status' =>'closed',
+	  'post_content' => $location_desk,
+	  'post_status' => 'publish',
+	  'post_title' => $location_name,
+	  'post_type' => 'location',
+	);
+
+	$post_id = wp_insert_post( $post);
+
+	if( $_POST['location_region'] ) update_post_meta($post_id, 'location_region', $_POST['location_region'] );
+	if( $_POST['location_town'] ) update_post_meta($post_id, 'location_town', $_POST['location_town'] );
+	if( $_POST['location_postcode'] ) update_post_meta($post_id, 'location_postcode', $_POST['location_postcode'] );
+	if( $_POST['location_address'] ) update_post_meta($post_id, 'location_address', $_POST['location_address'] );
+
+  echo "ok";
+
+  die(); // this is required to return a proper result
+}
+add_action( 'wp_ajax_cr_add_event_action', 'cr_add_event_action_callback' );
+
+function cr_add_event_action_javascript() {
+  //Set Your Nonce
+  $ajax_nonce = wp_create_nonce( "cr-special-string" );
+?>
+<script>
+jQuery(document).ready(function($) {
+ $('.add-new-location').click(function() {
+
+	  var data = {
+	    action: 'cr_add_event_action',
+	    security: '<?php echo $ajax_nonce; ?>',
+	    location_name : $('[name="location_name_cr"]').val(),
+	    location_desk : $('[name="location_desk_cr"]').val(),
+	    location_region : $('[name="location_region_cr"]').val(),
+	    location_town : $('[name="location_town_cr"]').val(),
+	    location_postcode : $('[name="location_postcode_cr"]').val(),
+	    location_address : $('[name="location_address_cr"]').val()
+	  };
+ 			$('[name="location_name_cr"]').val('');
+		    $('[name="location_desk_cr"]').val('');
+		    $('[name="location_region_cr"]').val('');
+		   	$('[name="location_town_cr"]').val('');
+		    $('[name="location_postcode_cr"]').val('');
+		    $('[name="location_address_cr"]').val('');
+  // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+	  $.post(ajaxurl, data, function(response) {
+		    
+		    console.log(response);
+	    	window.location.reload();
+	  });
+  });
+});
+</script>
+<?php
+}
+add_action( 'admin_footer', 'cr_add_event_action_javascript' );

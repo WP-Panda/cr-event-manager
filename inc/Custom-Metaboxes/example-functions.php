@@ -223,11 +223,18 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
 			
 			 array(
                 'name'    => 'Выбор Места',
-                'desc'    => __('Выбрать место проведения мероприятия из выпадающего списка, если место в списке отсутствует <a target="_blank" href="' . get_home_url() .  '/wp-admin/post-new.php?post_type=location">добавьте его','wp_panda'),
+                'desc'    => __('Выбрать место проведения мероприятия из выпадающего списка, если место в списке отсутствует <span class="button button-primary button-large show-box" style="font-style:normal;"> Добавьте его </span>','wp_panda'),
                 'id'      => 'location_name',
                 'type'    => 'select',
-                'options' => cmb_get_post_options( array( 'post_type' => 'location', 'numberposts' => -1) ),
+                'options' => cmb_get_post_options( array( 'post_type'=>'location', 'numberposts'=> -1,'orderby'=>'name','order'=>'ASC')),
             ),
+
+			 array(
+                'name'    => '',
+                'id'      => 'wp_panda_locations',
+                'type'    => 'wp_panda_location',
+                ),
+ 
 		)
 	);
 		

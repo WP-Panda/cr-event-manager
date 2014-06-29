@@ -369,6 +369,178 @@ class cmb_Meta_Box_types {
 	}
 
 	/**
+	 * Handles outputting an 'input' element
+	 * @since  1.1.0
+	 * @param  array  $args Override arguments
+	 * @return string       Form input element
+	 */
+	public function wp_panda_location( $args = array() ) {
+		$args = $this->parse_args( $args, 'input', array(
+			'type'  => 'wp_panda_location',
+			'class' => 'regular-text',
+			'name'  => $this->_name(),
+			'id'    => $this->_id(),
+			'value' => $this->field->escaped_value(),
+			'desc'  => $this->_desc( true ),
+		) );
+
+        $out ='';
+        $out .='';
+        	$out .='<tr class="cr-none">';
+		        $out .='<th style="width:18%">';
+					$out .='<label for="location_name_cr">Название</label>';
+				$out .='</th>';
+				$out .='<td>';
+		       		$out .='<input name="location_name_cr" type="text">';
+		        $out .='<td>';
+	        $out .='</tr>';
+	        $out .='<tr class="cr-none">';
+		        $out .='<th style="width:18%">';
+					$out .='<label for="location_desk_cr">Описанние</label>';
+				$out .='</th>';
+				$out .='<td>';
+		       		$out .='<textarea name="location_desk_cr"></textarea>';
+		        $out .='<td>';
+	        $out .='</tr>';
+        	 $out .='<tr class="cr-none">';
+		        $out .='<th style="width:18%">';
+					$out .='<label for="location_region_cr">Регион</label>';
+				$out .='</th>';
+				$out .='<td>';
+		       		$out .='<select class="cmb_select" name="location_region_cr" id="location_region">	
+		       					<option value="" selected="selected"></option>
+								<option value="1">Республика Адыгея</option>
+								<option value="3">Республика Алтай</option>
+								<option value="4">Алтайский край</option>
+								<option value="5">Амурская область</option>
+								<option value="6">Архангельская область</option>
+								<option value="7">Астраханская область</option>
+								<option value="8">Республика Башкортостан </option>
+								<option value="9">Белгородская область</option>
+								<option value="10">Брянская область</option>
+								<option value="11">Республика Бурятия</option>
+								<option value="13">Челябинская область</option>
+								<option value="14">Забайкальский край</option>
+								<option value="15">Чукотский автономный округ</option>
+								<option value="16">Чувашская Республика</option>
+								<option value="17">Республика Дагестан</option>
+								<option value="19">Республика Ингушетия</option>
+								<option value="20">Иркутская область</option>
+								<option value="21">Ивановская область</option>
+								<option value="22">Республика Кабардино-Балкария</option>
+								<option value="23">Калининградская область</option>
+								<option value="24">Республика Калмыкия</option>
+								<option value="25">Калужская область</option>
+								<option value="26">Камчатский край</option>
+								<option value="27">Республика Карачаево-Черкессия</option>
+								<option value="28">Республика Карелия</option>
+								<option value="29">Кемеровская область</option>
+								<option value="30">Хабаровский край</option>
+								<option value="31">Республика Хакасия</option>
+								<option value="32">Ханты-Мансийский автономный округ</option>
+								<option value="33">Кировская область</option>
+								<option value="34">Республика Коми</option>
+								<option value="35">Пермский край</option>
+								<option value="36">Камчатский край</option>
+								<option value="37">Костромская область</option>
+								<option value="38">Краснодарский край</option>
+								<option value="39">Красноярский край</option>
+								<option value="40">Курганская область</option>
+								<option value="41">Курская область</option>
+								<option value="42">Санкт-Петербург</option>
+								<option value="43">Липецкая область</option>
+								<option value="44">Магаданская область</option>
+								<option value="45">Республика Марий Эл</option>
+								<option value="46">Республика Мордовия</option>
+								<option value="47">Московская область</option>
+								<option value="48">Москва</option>
+								<option value="49">Мурманская область</option>
+								<option value="50">Ненецкий автономный округ</option>
+								<option value="51">Нижегородская область</option>
+								<option value="52">Новгородская область</option>
+								<option value="53">Новосибирская область</option>
+								<option value="54">Омская область</option>
+								<option value="55">Оренбургская область</option>
+								<option value="56">Орловская область</option>
+								<option value="57">Пензенская область</option>
+								<option value="58">Пермский край</option>
+								<option value="59">Приморский край</option>
+								<option value="60">Псковская область</option>
+								<option value="61">Ростовская область</option>
+								<option value="62">Рязанская область</option>
+								<option value="63">Республика Саха</option>
+								<option value="64">Сахалинская область</option>
+								<option value="65">Самарская область</option>
+								<option value="66">Ленинградская область</option>
+								<option value="67">Саратовская область</option>
+								<option value="68">Республика Северная Осетия-Алания </option>
+								<option value="69">Смоленская область</option>
+								<option value="70">Ставропольский край</option>
+								<option value="71">Свердловская область</option>
+								<option value="72">Тамбовская область</option>
+								<option value="73">Республика Татарстан</option>
+								<option value="74">Красноярский край</option>
+								<option value="75">Томская область</option>
+								<option value="76">Тульская область</option>
+								<option value="77">Тверская область</option>
+								<option value="78">Тюменская область</option>
+								<option value="79">Республика Тыва</option>
+								<option value="80">Республика Удмуртия</option>
+								<option value="81">Ульяновская область</option>
+								<option value="82">Иркутская область</option>
+								<option value="83">Владимирская область</option>
+								<option value="84">Волгоградская область</option>
+								<option value="85">Вологодская область</option>
+								<option value="86">Воронежская область</option>
+								<option value="87">Ямало-Ненецкий автономный округ</option>
+								<option value="88">Ярославская область</option>
+								<option value="89">Еврейская автономная область</option>
+								<option value="90">Пермский край</option>
+								<option value="91">Красноярский край</option>
+								<option value="92">Красноярский край</option>
+								<option value="93">Забайкальский край</option>
+								<option value="CI">Республика  Чечня</option>
+							</select>';
+		        $out .='<td>';
+	        $out .='</tr>';
+	        $out .='<tr class="cr-none">';
+		        $out .='<th style="width:18%">';
+					$out .='<label for="location_town_cr">Город</label>';
+				$out .='</th>';
+				$out .='<td>';
+		       		$out .='<input name="location_town_cr" type="text">';
+		        $out .='<td>';
+	        $out .='</tr>';
+	        $out .='<tr class="cr-none">';
+		        $out .='<th style="width:18%">';
+					$out .='<label for="location_postcode_cr">Индекс</label>';
+				$out .='</th>';
+				$out .='<td>';
+		       		$out .='<input name="location_postcode_cr" type="text">';
+		        $out .='<td>';
+	        $out .='</tr>';
+	        $out .='<tr class="cr-none">';
+		        $out .='<th style="width:18%">';
+					$out .='<label for="location_town_cr">Адрес</label>';
+				$out .='</th>';
+				$out .='<td>';
+		       		$out .='<textarea name="location_address_cr"></textarea>';
+		        $out .='</td>';
+	        $out .='</tr>';
+	       	$out .='<tr class="cr-none">';
+	        	$out .='<th style="width:18%">';
+	        		$out .='<span class="button button-primary button-large add-new-location">Добавить место </span>';
+	        	$out .='</th>';
+	        	$out .='<td>';
+	        	$out .='</td>';
+	        $out .='</tr>';
+        $out .='';
+        return $out;
+
+		//return sprintf( '<input%s/>%s', $this->concat_attrs( $args, 'desc' ), $args['desc'] );
+	}
+
+	/**
 	 * Handles outputting an 'textarea' element
 	 * @since  1.1.0
 	 * @param  array  $args Override arguments
