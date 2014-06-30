@@ -181,13 +181,13 @@ if (!function_exists('cr_todays_events')) {
                 'relation' => 'AND',
                 array(
                     'key' => 'unix_date_start',
-                    'value' => $day_end,
+                    'value' => array($day_end,''),
                     'type' => 'NUMERIC',
                     'compare' => '<='
                 ),
                 array(
                     'key' => 'unix_date_end',
-                    'value' => $day_start,
+                    'value' => array($day_start,''),
                     'type' => 'NUMERIC',
                     'compare' => '>='
                 )
@@ -258,13 +258,13 @@ if (!function_exists('cr_todays_events_tabs')) {
                 'relation' => 'AND',
                 array(
                     'key' => 'unix_date_start',
-                    'value' => $day_end,
+                    'value' => array($day_end,''),
                     'type' => 'NUMERIC',
                     'compare' => '<='
                 ),
                 array(
                     'key' => 'unix_date_end',
-                    'value' => $day_start,
+                    'value' => array($day_start,''),
                     'type' => 'NUMERIC',
                     'compare' => '>='
                 )
@@ -400,7 +400,7 @@ function cr_event_tabs_action_callback()
             'relation' => 'AND',
             array(
                 'key' => 'unix_date_end',
-                'value' => $day_start,
+                'value' => array($day_start,''),
                 'type' => 'NUMERIC',
                 'compare' => '>='
             )
@@ -413,7 +413,7 @@ function cr_event_tabs_action_callback()
     if (!empty($day_end)) {
         $args['meta_query'][] = array(
             'key' => 'unix_date_start',
-            'value' => $day_end,
+            'value' => array($day_end,''),
             'type' => 'NUMERIC',
             'compare' => '<='
         );
@@ -669,7 +669,7 @@ function cr_event_filter_action_callback()
            // echo '<h1>' . $day_start . '</h1>';
             $args['meta_query']['start'] = array(
                 'key' => 'unix_date_end',
-                'value' => $day_start,
+                'value' => array( $day_start,''),
                 'type' => 'NUMERIC',
                 'compare' => '>='
             );
@@ -679,7 +679,7 @@ function cr_event_filter_action_callback()
            // echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_start',
-                'value' => $day_end,
+                'value' => array($day_end,''),
                 'type' => 'NUMERIC',
                 'compare' => '<='
             );
@@ -687,7 +687,7 @@ function cr_event_filter_action_callback()
            // echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_end',
-                'value' => $day_end,
+                'value' => array($day_end,''),
                 'type' => 'NUMERIC',
                 'compare' => '<='
             );
@@ -831,7 +831,7 @@ function cr_event_ide_filter_action_callback()
         if (!empty($day_start)) {
             $args['meta_query']['start'] = array(
                 'key' => 'unix_date_end',
-                'value' => $day_start,
+                'value' => array( $day_start,''),
                 'type' => 'NUMERIC',
                 'compare' => '>='
             );
@@ -841,7 +841,7 @@ function cr_event_ide_filter_action_callback()
            // echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_start',
-                'value' => $day_end,
+                'value' => array( $day_end,''),
                 'type' => 'NUMERIC',
                 'compare' => '<='
             );
@@ -849,7 +849,7 @@ function cr_event_ide_filter_action_callback()
           //  echo '<h1>' . $day_end . '</h1>';
             $args['meta_query']['end'] = array(
                 'key' => 'unix_date_end',
-                'value' => $day_end,
+                'value' => array( $day_end,''),
                 'type' => 'NUMERIC',
                 'compare' => '<='
             );
